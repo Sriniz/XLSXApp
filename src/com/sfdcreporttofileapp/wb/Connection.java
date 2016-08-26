@@ -11,6 +11,7 @@ package com.sfdcreporttofileapp.wb;
  */
 public interface Connection {
 	/* QA    */
+
 	String USERNAME = "srinizkumar.konakanchi@wbconsultant.com.preprod";
 	String PASSWORD = "Indian06#";
 	String url = "https://test.salesforce.com/services/oauth2/token";
