@@ -49,14 +49,14 @@ public class ProcessFileThread extends Thread {
 				urlToken = conDetail.split(";");
 				rest = new RestUtil(urlToken[1],urlToken[0]);
 				util = new ReportUtil();
-				String q = "SELECT id,Name FROM Announcement__c where File_Status__c='Pending'";
+				String q = "SELECT id,Name,Announcement_Date_Format__c FROM Announcement__c where File_Status__c='Pending'";
 				JSONArray jsonArray = rest.restQuery(q);
 				System.out.println("jsonArray length:"+jsonArray.length());
 				for (int i = 0; i < jsonArray.length(); i++) {
 					JSONObject jsonObj = jsonArray.getJSONObject(i);
 					if(jsonObj.get("Id").toString()!=null){
 						System.out.println("Announcmenet ID :"+jsonObj.get("Id").toString());
-						processAnnouncement(urlToken,jsonObj.get("Id").toString(),rest,util);
+						processAnnouncement(urlToken,jsonObj.get("Id").toString(),rest,util,jsonObj.get("Announcement_Date_Format__c").toString());
 					}
 				}
 				//Thread.sleep(300000); 5 min polling
@@ -70,7 +70,7 @@ public class ProcessFileThread extends Thread {
 	
 	
 	
-	public void processAnnouncement(String[] urlToken,String annId,RestUtil rest,ReportUtil util) {
+	public void processAnnouncement(String[] urlToken,String annId,RestUtil rest,ReportUtil util,String annDateFormat) {
 		try {
 			Announcement ann = rest.restGetAnnouncementDetail(annId);
 			System.out.println("Announcement : "+ann.getName__c());
@@ -92,7 +92,7 @@ public class ProcessFileThread extends Thread {
 			if (util.getReportName(reportDetails).startsWith("WB")){
 				emaCheck = true;
 			}
-			cfI.createFile(util.getQueryString(reportDetails,ann.getId()), colList, ann.getName__c(),colAPIList,ann,emaCheck,dataTypeList);
+			cfI.createFile(util.getQueryString(reportDetails,ann.getId()), colList, ann.getName__c(),colAPIList,ann,emaCheck,dataTypeList,annDateFormat);
 		} catch (Exception e) {
 			System.out.println("Cannot process Announcement Due to :"+e.toString());
 			e.printStackTrace();

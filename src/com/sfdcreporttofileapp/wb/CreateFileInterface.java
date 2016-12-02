@@ -11,5 +11,5 @@ import java.util.List;
  */
 public interface CreateFileInterface {
 	
-	public String createFile(String query,List<String> col,String FileName,List<String> colAPI,Announcement ann,boolean EMACheck,List<String> dataType) throws Exception;
+	public String createFile(String query,List<String> col,String FileName,List<String> colAPI,Announcement ann,boolean EMACheck,List<String> dataType,String annDateType) throws Exception;
 }

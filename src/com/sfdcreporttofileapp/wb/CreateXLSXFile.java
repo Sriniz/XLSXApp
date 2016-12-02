@@ -26,6 +26,7 @@ import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.DataFormat;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.util.DateFormatConverter;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFDataFormat;
@@ -56,7 +57,7 @@ public class CreateXLSXFile extends createFileAbstract implements CreateFileInte
 
 
 	@Override
-	public String createFile(String query, List<String> col, String FileName,List<String> colAPI,Announcement ann,boolean emaCheck,List<String> dataType) throws Exception{
+	public String createFile(String query, List<String> col, String FileName,List<String> colAPI,Announcement ann,boolean emaCheck,List<String> dataType,String annDateFormat) throws Exception{
 		//System.out.println("CreateXLSXFile : createFile");
 		String xlsxFileName = FileName+".xlsx";
 		FileOutputStream fileOutputStream = new FileOutputStream(xlsxFileName);
@@ -68,11 +69,21 @@ public class CreateXLSXFile extends createFileAbstract implements CreateFileInte
 	    CreationHelper createHelper = workBook.getCreationHelper();
 	    //short dateFormat = createHelper.createDataFormat().getFormat("yyyy-dd-MM");
 	    short dateFormat = 0;
+	    /*
 	    if(emaCheck){
 	    	dateFormat = createHelper.createDataFormat().getFormat("MM/dd/yyyy");
 	    }else {
 	    	dateFormat = createHelper.createDataFormat().getFormat("yyyy-MM-dd");
-	    }
+	    }*/
+	    //Sriniz changes start for the date format 11/18/2016
+	    if(annDateFormat.equals("DD/MM/YYYY"))
+	    	dateFormat = createHelper.createDataFormat().getFormat("DD/MM/YYYY");
+	    else if(annDateFormat.equals("YYYY-MM-DD"))
+	    	dateFormat = createHelper.createDataFormat().getFormat("YYYY-MM-DD");
+	    else if(annDateFormat.equals("DD-Mmm-YY"))
+	    	dateFormat = createHelper.createDataFormat().getFormat(DateFormatConverter.convert(Locale.ENGLISH, "dd-MMM-yy"));
+	    else
+	    	dateFormat = createHelper.createDataFormat().getFormat("MM/DD/YYYY");
 	    cellStyle.setDataFormat(dateFormat);
 		////////////////////
 	    SXSSFSheet sheet =(SXSSFSheet) workBook.createSheet(FileName);
@@ -199,7 +210,7 @@ public class CreateXLSXFile extends createFileAbstract implements CreateFileInte
         
         if(noOfCollRecords != 0){
         	int RowNumCollection=0;
-      		SXSSFSheet sheetCollection = (SXSSFSheet) workBook.createSheet("Collection Details");
+      		SXSSFSheet sheetCollection = (SXSSFSheet) workBook.createSheet("Bundle Details");
       	    Row headerRowCollection = sheetCollection.createRow(RowNumCollection++);
       	    RestUtil rest = new RestUtil(accessToken,instanceUrl);
       	    ReportUtil util = new ReportUtil();
