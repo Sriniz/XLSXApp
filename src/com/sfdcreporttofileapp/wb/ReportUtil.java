@@ -73,17 +73,17 @@ public class ReportUtil {
 		reportQuery = reportQuery.substring(0, reportQuery.length()-1); // remove the last comma
 		System.out.println("getReportName(reportDetails)....sriniz"+getReportName(reportDetails));
 		if(getReportName(reportDetails).equals("WB_Standard_Combined"))
-			reportQuery += " FROM Announcement_Record__c WHERE Announcement__c='"+annId+"' AND Announce_Override__c!='Suppress' ORDER BY Client_Avail__r.EMA_SeasonTitleInternetAlias__c,Client_Avail__r.EMA_EpisodeNumber__c,Client_Avail__r.Title_Alias__c,Client_Avail__r.Release_Plan_Country__c,Client_Avail__r.Release_Plan_Language__c,Channel_Formula__c,Client_Avail__r.Release_Plan_Format__c,Client_Avail__r.EMA_Start__c";
+			reportQuery += " FROM Announcement_Record__c WHERE Announcement__c='"+annId+"' AND Announce_Override__c!='Suppress' ORDER BY Client_Avail__r.EMA_SeasonTitleInternetAlias__c,Client_Avail__r.EMA_EpisodeNumber__c,Client_Avail__r.Title_Alias__c,Client_Avail__r.Release_Plan_Country__c,Client_Avail__r.Release_Plan_Language__c,Channel_Formula__c,Client_Avail__r.Release_Plan_Format__c,Client_Avail__r.Name,Client_Start__c ASC";
 		else if(getReportName(reportDetails).equals("WB_Standard_Feature_VOD"))
-			reportQuery += " FROM Announcement_Record__c WHERE Announcement__c='"+annId+"' AND Announce_Override__c!='Suppress' ORDER BY Client_Avail__r.Title_Local_Title__c,Country__c,Language__c,Channel__c,Format__c,Client_Start__c";			
+			reportQuery += " FROM Announcement_Record__c WHERE Announcement__c='"+annId+"' AND Announce_Override__c!='Suppress' ORDER BY Client_Avail__r.Title_Local_Title__c,Country__c,Language__c,Channel__c,Format__c,Client_Avail__r.Name,Client_Start__c ASC";			
 		else if(getReportName(reportDetails).equals("WB_Standard_TV"))
-			reportQuery += " FROM Announcement_Record__c WHERE Announcement__c='"+annId+"' AND Announce_Override__c!='Suppress' ORDER BY Client_Avail__r.EMA_SeasonTitleInternetAlias__c,Client_Avail__r.Release_Plan_Country__c,Client_Avail__r.Release_Plan_Language__c,Client_Avail__r.Title_Content_Type__c DESC,Client_Avail__r.EMA_EpisodeNumber__c,Channel_Formula__c,Client_Avail__r.Release_Plan_Format__c,Client_Avail__r.EMA_Start__c";
+			reportQuery += " FROM Announcement_Record__c WHERE Announcement__c='"+annId+"' AND Announce_Override__c!='Suppress' ORDER BY Client_Avail__r.EMA_SeasonTitleInternetAlias__c,Client_Avail__r.Release_Plan_Country__c,Client_Avail__r.Release_Plan_Language__c,Client_Avail__r.Title_Content_Type__c DESC,Client_Avail__r.EMA_EpisodeNumber__c,Channel_Formula__c,Client_Avail__r.Release_Plan_Format__c,Client_Avail__r.Name,Client_Start__c ASC";
 		else if(getReportName(reportDetails).equals("EMA_Features_v1_6"))
-			reportQuery += " FROM Announcement_Record__c WHERE Announcement__c='"+annId+"' AND Announce_Override__c!='Suppress' ORDER BY Client_Avail__r.EMA_TitleInternalAlias__c,Client_Avail__r.Territory__c,Client_Avail__r.EMA_StoreLanguage__c,Client_Avail__r.EMA_LicenseType__c,Client_Avail__r.EMA_FormatProfile__c,Client_Avail__r.EMA_Start__c";			
+			reportQuery += " FROM Announcement_Record__c WHERE Announcement__c='"+annId+"' AND Announce_Override__c!='Suppress' ORDER BY Client_Avail__r.EMA_TitleInternalAlias__c,Client_Avail__r.Territory__c,Client_Avail__r.EMA_StoreLanguage__c,Client_Avail__r.EMA_LicenseType__c,Client_Avail__r.EMA_FormatProfile__c,Client_Avail__r.Name,Client_Start__c ASC";			
 		else if(getReportName(reportDetails).equals("EMA_TV_v1_6"))
-			reportQuery += " FROM Announcement_Record__c WHERE Announcement__c='"+annId+"' AND Announce_Override__c!='Suppress' ORDER BY Client_Avail__r.EMA_SeriesTitleInternalAlias__c,Client_Avail__r.EMA_SeasonNumber__c,Client_Avail__r.Territory__c,Client_Avail__r.EMA_EpisodeNumber__c,Client_Avail__r.EMA_Start__c";			
+			reportQuery += " FROM Announcement_Record__c WHERE Announcement__c='"+annId+"' AND Announce_Override__c!='Suppress' ORDER BY Client_Avail__r.EMA_SeriesTitleInternalAlias__c,Client_Avail__r.EMA_SeasonNumber__c,Client_Avail__r.Territory__c,Client_Avail__r.EMA_EpisodeNumber__c,Client_Avail__r.Name,Client_Start__c ASC";			
 		else
-			reportQuery += " FROM Announcement_Record__c WHERE Announcement__c='"+annId+"' AND Announce_Override__c!='Suppress' ORDER BY Global_Title__c,Country__c,Language__c,Channel__c,Format__c,Client_Start__c";	
+			reportQuery += " FROM Announcement_Record__c WHERE Announcement__c='"+annId+"' AND Announce_Override__c!='Suppress' ORDER BY Global_Title__c,Country__c,Language__c,Channel__c,Format__c,Client_Avail__r.Name,Client_Start__c ASC";	
 		System.out.println("\nFinal Query :"+reportQuery);
 		return reportQuery;
 	}
